@@ -43,15 +43,19 @@
 
     <script>
         function sendRequest(buttonId) {
-            // Envia uma requisição GET ao servidor Lua com o ID do botão clicado
-            fetch(`http://localhost:8080/?selected=${buttonId}`)
-                .then(response => response.text())
-                .then(html => {
-                    // Atualiza a página com a resposta do servidor
-                    document.open();
-                    document.write(html);
-                    document.close();
-                });
+            // Envia uma requisição POST ao servidor FiveM com o ID do botão clicado
+            fetch(`https://localhost/miau/interact`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ selected: buttonId })
+            })
+            .then(response => response.text())
+            .then(html => {
+                // Atualiza a página com a resposta do servidor
+                document.open();
+                document.write(html);
+                document.close();
+            });
         }
     </script>
 </body>
