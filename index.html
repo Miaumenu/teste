@@ -10,18 +10,79 @@
             text-align: center;
             margin-top: 50px;
             background-color: #f4f4f4;
+            cursor: none; /* Desativa o cursor padrão */
         }
         h1 {
             color: #333;
         }
-        p {
-            font-size: 18px;
-            color: #666;
+        .menu {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+        .menu button {
+            padding: 10px 20px;
+            font-size: 16px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            background-color: #f0f0f0;
+            transition: background-color 0.3s;
+        }
+        .menu button:hover {
+            background-color: #ddd;
+        }
+        .menu button.selected {
+            background-color: green;
+            color: white;
+        }
+        .custom-cursor {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background-color: red;
+            border-radius: 50%;
+            pointer-events: none; /* Evita que o cursor interfira com cliques */
+            transform: translate(-50%, -50%);
         }
     </style>
 </head>
 <body>
     <h1>Bem-vindo ao MiauMenu!</h1>
-    <p>Este é um menu simples renderizado diretamente no FiveM.</p>
+    <div class="menu">
+        <button id="btn1" onclick="sendRequest('btn1')">Botão 1</button>
+        <button id="btn2" onclick="sendRequest('btn2')">Botão 2</button>
+        <button id="btn3" onclick="sendRequest('btn3')">Botão 3</button>
+    </div>
+
+    <!-- Cursor personalizado -->
+    <div class="custom-cursor" id="cursor"></div>
+
+    <script>
+        // Função para enviar uma requisição ao cliente Lua
+        function sendRequest(buttonId) {
+            fetch(`https://${GetParentResourceName()}/interact`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ selected: buttonId })
+            });
+        }
+
+        // Atualiza a posição do cursor personalizado
+        document.addEventListener("mousemove", function(event) {
+            const cursor = document.getElementById("cursor");
+            cursor.style.left = event.pageX + "px";
+            cursor.style.top = event.pageY + "px";
+        });
+
+        // Envia uma mensagem ao cliente Lua indicando que o NUI está pronto
+        window.onload = function() {
+            fetch(`https://${GetParentResourceName()}/ready`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({})
+            });
+        };
+    </script>
 </body>
 </html>
