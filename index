@@ -9,54 +9,19 @@
             font-family: Arial, sans-serif;
             text-align: center;
             margin-top: 50px;
+            background-color: #f4f4f4;
         }
-        .menu {
-            display: flex;
-            justify-content: center;
-            gap: 20px;
+        h1 {
+            color: #333;
         }
-        .menu button {
-            padding: 10px 20px;
-            font-size: 16px;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            background-color: #f0f0f0;
-            transition: background-color 0.3s;
-        }
-        .menu button:hover {
-            background-color: #ddd;
-        }
-        .menu button.selected {
-            background-color: green;
-            color: white;
+        p {
+            font-size: 18px;
+            color: #666;
         }
     </style>
 </head>
 <body>
-    <h1>MiauMenu</h1>
-    <div class="menu">
-        <button id="btn1" onclick="sendRequest('btn1')">Botão 1</button>
-        <button id="btn2" onclick="sendRequest('btn2')">Botão 2</button>
-        <button id="btn3" onclick="sendRequest('btn3')">Botão 3</button>
-    </div>
-
-    <script>
-        function sendRequest(buttonId) {
-            // Envia uma requisição POST ao servidor FiveM com o ID do botão clicado
-            fetch(`https://localhost/miau/interact`, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ selected: buttonId })
-            })
-            .then(response => response.text())
-            .then(html => {
-                // Atualiza a página com a resposta do servidor
-                document.open();
-                document.write(html);
-                document.close();
-            });
-        }
-    </script>
+    <h1>Bem-vindo ao MiauMenu!</h1>
+    <p>Este é um menu simples renderizado diretamente no FiveM.</p>
 </body>
 </html>
